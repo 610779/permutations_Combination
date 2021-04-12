@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+// your learning experience of implementing these algorithm, 知道會有這麼多組合。也可以手算全部列出，但這個邏輯真的很難描述
+// how to use your implementation, introduce with example code.手動去改main裡面的arr[] 跟 r 程式會印出arr裡面取r個數字出來的所有結果
+// what is the limitation of your implementation. 一定要打開原始碼才能改動 僅限整數的取法
+  
+void combinationUtil(int arr[], int data[], int start, int end,
+                     int index, int r);
+ 
+// in arr[] of size n. This function mainly uses combinationUtil()
+void printCombination(int arr[], int n, int r)
+{
+    // 暫存所有組合的Array
+    int data[r];
+ 
+    // Print all combination using temprary array 'data[]'
+    combinationUtil(arr, data, 0, n-1, 0, r);
+}
+ 
+/* arr[]  輸入
+   data[] 暫時存放
+   start & end ---> Staring and Ending indexes in arr[]
+   index 現在的資料位置
+   r  幾個一組 */
+void combinationUtil(int arr[], int data[], int start, int end,
+                     int index, int r)
+{
+    // 印出現在的組合
+    if (index == r)
+    {
+        for (int j=0; j<r; j++)
+            printf("%d ", data[j]);
+        printf("\n");
+        return;
+    }
+ 
+    
+    for (int i=start; i<=end && end-i+1 >= r-index; i++)
+    {
+        data[index] = arr[i];
+        combinationUtil(arr, data, i+1, end, index+1, r);
+    }
+}
+ 
+int main()
+{
+    int arr[] = {1, 2, 3, 4, 5};
+    int r = 3;
+    int n = sizeof(arr)/sizeof(arr[0]);
+    printCombination(arr, n, r);
+}
