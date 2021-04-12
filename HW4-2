@@ -1,0 +1,45 @@
+#include <stdio.h> 
+#include <string.h> 
+
+// your learning experience of implementing these algorithm, 知道會有這麼多組合。先for迴圈在遞迴，遞迴到底層，印出排列後回上一層
+// how to use your implementation, introduce with example code.手動去改main裡面的str[]改成 24行的print是去看l的家
+// what is the limitation of your implementation. 一定要打開原始碼才能改動str[]
+  
+/* 用來交換Char */
+void swap(char* x, char* y) 
+{ 
+    char temp; 
+    temp = *x; 
+    *x = *y; 
+    *y = temp; 
+} 
+  
+/* Function to print permutations of string 
+   This function takes three parameters: 
+   1. String 
+   2. Starting index of the string 
+   3. Ending index of the string. */
+void permute(char* a, int l, int r) 
+{ 
+    //printf("%d %d\n",l,r);
+    int i; 
+    if (l == r) 
+        printf("%s\n", a); 
+    else { 
+        for (i = l; i <= r; i++) { 
+            swap((a + l), (a + i)); 
+            permute(a, l + 1, r); 
+            swap((a + l), (a + i)); // backtrack 把已經交換的再一次換回來 等於回到上一步 上一層
+        } 
+    } 
+} 
+//所有的結果都是4結尾
+//利用for迴圈來交換一個
+//用遞迴來產生新的組織
+int main() 
+{ 
+    char str[] = "ABCD"; 
+    int n = strlen(str); 
+    permute(str, 0, n - 1); 
+    return 0; 
+} 
